@@ -11,7 +11,7 @@ namespace WebApiApplication
         public string LastName { get; set; }
 
     }
-    [EnableCors(origins: "http://localhost:52874/home/", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class StudensController : ApiController
     {
         public List<Student> Get()
