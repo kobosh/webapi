@@ -9,7 +9,7 @@ namespace WebApiApplication
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            GlobalConfiguration.Configuration.EnableCors();
+           // GlobalConfiguration.Configuration.EnableCors();
             GlobalConfiguration.Configuration.Routes.Add("Default",
                new HttpRoute("{Controller}"));
 

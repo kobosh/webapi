@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Cors;
 namespace WebApiApplication
 {
     public class Student
@@ -11,21 +12,20 @@ namespace WebApiApplication
         public string LastName { get; set; }
 
     }
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    // [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class StudensController : ApiController
     {
-        public List<Student> Get()
+
+        public HttpResponseMessage Get()
         {
-            return StudentRepository.GetAllStudents();// "Hello web api";
+            HttpRequestMessage Request = new HttpRequestMessage();
+            HttpResponseMessage response =
+                Request.CreateResponse(HttpStatusCode.OK,
+                StudentRepository.GetAllStudents());
+            response.Headers.Add("Access-Control-Allow-Origin", "*");
+            return response;
         }
-        //public HttpResponseMessage Request()
-        //{
-        //    HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-        //    response.Headers.Add("Access-Control-Allow-Origin", "*");
-        //    response.Content = new StringContent("Some content...",
-        //        System.Text.Encoding.UTF8, "text/plain");
-        //    return response;
-        //}
+
 
     }
     public class StudentRepository
@@ -36,6 +36,15 @@ namespace WebApiApplication
           new Student(){ StudentID=3, FirstName="Hussan",LastName="Mohu"},
            new Student(){ StudentID=4, FirstName="Hessan",LastName="Moham"}
     };
+      /*  HttpResponseMessage GetStudents()
+        {
+            var req = new HttpClient();
+            HttpResponseMessage response =
+            Request.CreateResponse(HttpStatusCode.OK, StudentRepository.GetAllStudents());
+            response.Headers.Add("Access-Control-Allow-Origin", "*");
+
+            return response;
+        }*/
 
         public static List<Student> GetAllStudents()
         {
